@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="{% static 'css/template2.css' %}" />
+  <title>Resume</title>
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+  <style>
+    {% if resume.templatecolor %}
+    .rectangle-parent{
+        background-color: {{resume.templatecolor}};
+    }
+    {% else %}
+    .rectangle-parent{
+      background-color: #2b6ced;
+    }
+    {% endif %}
+  </style>
+</head>
+
+<body>
+  <div id="loader" class="loader">
+    <div class="loading" data-loading-text="Processing..."></div>
+    <div class="download-again" style="display: none">
+      <p>
+        If download did not start automatically
+        <span onclick="downloadResume()">click</span> here
+      </p>
+      <div class="feedback-main-containeer">
+        <div class="feedback-container">
+            <div class="feedback-post">
+              <h1>THANK YOU!</h1>
+              <img src="{% static 'images/green_tick.png' %}" />
+                <div class="feedback-text">Thanks for rating us!</div>
+            </div>
+            <div class="feedback-star-widget">
+                <h2>Feedback</h2>
+                <p>How can we improve ?</p>
+                <input class="feeback-stars" name="rate" type="radio" id="feedback-rate-5" value="5">
+                <label for="feedback-rate-5" class="fas fa-star"></label>
+                <input class="feeback-stars" name="rate" type="radio" id="feedback-rate-4" value="4">
+                <label for="feedback-rate-4" class="fas fa-star"></label>
+                <input class="feeback-stars" name="rate" type="radio" id="feedback-rate-3" value="3">
+                <label for="feedback-rate-3" class="fas fa-star"></label>
+                <input class="feeback-stars" name="rate" type="radio" id="feedback-rate-2" value="2">
+                <label for="feedback-rate-2" class="fas fa-star"></label>
+                <input class="feeback-stars" name="rate" type="radio" id="feedback-rate-1" value="1">
+                <label for="feedback-rate-1" class="fas fa-star"></label>
+                <formi>
+                    <input type="hidden" name="rating" id="rating">
+                    <div class="feedback-textarea">
+                        <textarea name="feedback-text" cols="30" placeholder="Describe your experience..." required></textarea>
+                    </div>
+                    <input type="email" id="feedback-email" name="feedback-email" placeholder="Feedback Email" required/>
+                    <div class="feedback-btn">
+                        <button id="feedback-submit-btn">
+                              <p class="button-text">Post</p>
+                              <div class="loading-indicator">
+                                <div class="spinner1"></div>
+                              </div>
+                        </button>
+                    </div>
+                </formi>
+            </div>
+        </div>
+    </div>
+    </div>
+  </div>
+  <div class="page_">
+    <div class="a4-3">
+      <div class="rectangle-parent">
+        <div class="frame-child"></div>
+        <div class="robyn-kingsley-wrapper">
+          <h1 class="robyn-kingsley">
+            <p class="robyn">{{resume.first_name}}</p>
+            <p class="kingsley">{{resume.last_name}}</p>
+          </h1>
+        </div>
+        <div class="location-and-skills">
+          <div class="frame-parent">
+            <div class="role-title-shape-wrapper">
+              <div class="role-title-shape"></div>
+            </div>
+            <div class="uxui-designer-product-container">
+              <p class="uxui-designer">UX/UI DESIGNER</p>
+              <p class="product-designer">PRODUCT DESIGNER</p>
+              <p class="ux-researcher">UX RESEARCHER</p>
+            </div>
+          </div>
+          <div class="location-icon-parent">
+            <img class="location-icon" loading="lazy" alt="" src="{% static 'images/vector.svg' %}" />
+
+            <div class="berlin-germany">Berlin, Germany</div>
+          </div>
+        </div>
+        <div class="education-parent">
+          <b class="education">EDUCATION</b>
+          <div class="skills-shape"></div>
+        </div>
+        <div class="education-and-experience">
+          <div class="education-columns-parent">
+            {% for edu in resume.education %}
+            <div class="education-columns">
+              <div class="education-headers">
+                <div class="course">{{edu.degree}}</div>
+                <div class="university">{{edu.institution}}</div>
+                <div class="div">{{edu.start_year}} – {{edu.end_year}}</div>
+              </div>
+              <div class="lorem-ipsum-dolor">{{edu.description}}</div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="skills-parent">
+          <b class="skills">SKILLS</b>
+          <div class="frame-item"></div>
+        </div>
+        <div class="expertise-items-parent">
+          {% for skill in resume.skills %}  
+          <div class="expertise-items">
+            <div class="expertise-icons">
+              <div class="expertise-icon-shape"></div>
+            </div>
+            <div class="user-experience">{{ skill }}</div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      <section class="social-and-contact">
+        <div class="social-links">
+          <div class="social-link-icons-wrapper">
+            <div class="social-link-icons">
+              <div class="social-link-icons-inner">
+                <img class="group-icon" loading="lazy" alt="Profile Pic" src="{{resume.profile_photo}}" />
+              </div>
+              <div class="social-link-icons-child">
+                <div class="frame-group">
+                  <div>
+                    <img class="frame-child3" loading="lazy" alt="" src="{% static 'images/mail_box.png' %}" />
+                    {{resume.email_web}}
+                  </div>
+                  <div>
+                  <img class="frame-child4" loading="lazy" alt="" src="{% static 'images/phone.png' %}" />
+                    {{resume.phone}}
+                  </div>
+                  <div>
+                    <img class="x31-0linkedin-icon" loading="lazy" alt="" src="{% static 'images/linkedin.png' %}" />
+                    {{resume.website}}
+                  </div>
+                  <!-- <div>
+                  <img class="frame-child5" loading="lazy" alt="" src="{% static 'images/group-4.svg' %}" />
+                    {{resume.email_web}}
+                  </div> -->
+                </div>
+              </div>
+             
+            </div>
+          </div>
+          <div class="product-info-parent">
+            <div class="product-info">
+              <div class="profile-header">
+                <b class="profile">PROFILE</b>
+              </div>
+              <div class="product-info-child"></div>
+            </div>
+            <div class="profile-description">
+              <div class="lorem-ipsum-dolor2">
+                {{resume.profile_description}}
+              </div>
+            </div>
+          </div>
+          {% if resume.experience %}
+          <div class="experience-header-parent">
+            <div class="experience-header">
+              <b class="experience">EXPERIENCE</b>
+            </div>
+            <div class="rectangle-div"></div>
+          </div>
+          <div class="work-experience">
+            <div class="work-experience-items">
+              {% for exp in resume.experience %}
+              <div class="work-experience-details-parent">
+                <div class="work-experience-details">
+                  <div class="job-position-company-container">
+                    <p class="job-position">{{exp.job_title}}</p>
+                    <p class="company-country">{{exp.company}}</p>
+                  </div>
+                  <div class="work-experience-duration">
+                    <div class="present">
+                      {{exp.start_year}} – {{ exp.end_year }}
+                    </div>
+                  </div>
+                </div>
+                <div class="ilorem-ipsum-dolor">{{ exp.description }}</div>
+                <div class="unique-experience-highlight-container">
+                  <ul class="unique-experience-highlight-un">
+                    <li class="unique-experience-highlight">
+                      Unique experience highlight
+                    </li>
+                    <li class="unique-experience-highlight1">
+                      Unique experience highlight
+                    </li>
+                    <li>Unique experience highlight</li>
+                  </ul>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+          {% endif %}
+          {% if resume.projects %}
+          <div class="experience-header-parent">
+            <div class="experience-header">
+              <b class="experience">PAST PROJECTS</b>
+            </div>
+            <div class="rectangle-div"></div>
+          </div>
+          <div class="work-experience">
+            <div class="work-experience-items">
+              {% for exp in resume.projects %}
+              <div class="work-experience-details-parent">
+                <div class="work-experience-details">
+                  <div class="job-position-company-container">
+                    <p class="job-position">{{exp.project_title}}</p>
+                    <!-- <p class="company-country">{{exp.company}}</p> -->
+                  </div>
+                  <div class="work-experience-duration">
+                    <div class="present">
+                      {{exp.project_year}}
+                    </div>
+                  </div>
+                </div>
+                <div class="ilorem-ipsum-dolor">{{ exp.project_description }}</div>
+                <div class="unique-experience-highlight-container">
+                  <ul class="unique-experience-highlight-un">
+                    <li class="unique-experience-highlight">
+                      Unique experience highlight
+                    </li>
+                    <li class="unique-experience-highlight1">
+                      Unique experience highlight
+                    </li>
+                    <li>Unique experience highlight</li>
+                  </ul>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+          {% endif %}
+          {% if resume.awards %}
+          <div class="experience-header-parent">
+            <div class="experience-header">
+              <b class="experience">AWARDS</b>
+            </div>
+            <div class="rectangle-div"></div>
+          </div>
+          <div class="work-experience">
+            <div class="work-experience-items">
+              {% for exp in resume.awards %}
+              <div class="work-experience-details-parent">
+                <div class="work-experience-details">
+                  <div class="job-position-company-container">
+                    <p class="job-position">{{exp.award_title}}</p>
+                    <!-- <p class="company-country">{{exp.company}}</p> -->
+                  </div>
+                  <div class="work-experience-duration">
+                    <div class="present">
+                      {{exp.award_year}}
+                    </div>
+                  </div>
+                </div>
+                <div class="ilorem-ipsum-dolor">{{ exp.award_description }}</div>
+                <div class="unique-experience-highlight-container">
+                  <ul class="unique-experience-highlight-un">
+                    <li class="unique-experience-highlight">
+                      Unique experience highlight
+                    </li>
+                    <li class="unique-experience-highlight1">
+                      Unique experience highlight
+                    </li>
+                    <li>Unique experience highlight</li>
+                  </ul>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+          {% endif %}
+          {% if resume.responsibilities %}
+          <div class="experience-header-parent">
+            <div class="experience-header">
+              <b class="experience">RESPONSIBILITIES</b>
+            </div>
+            <div class="rectangle-div"></div>
+          </div>
+          <div class="work-experience">
+            <div class="work-experience-items">
+              {% for exp in resume.responsibilities %}
+              <div class="work-experience-details-parent">
+                <div class="work-experience-details">
+                  <div class="job-position-company-container">
+                    <p class="job-position">{{exp.responsibility_title}}</p>
+                    <!-- <p class="company-country">{{exp.company}}</p> -->
+                  </div>
+                  <div class="work-experience-duration">
+                    <div class="present">
+                      {{exp.responsibility_year}} 
+                    </div>
+                  </div>
+                </div>
+                <div class="ilorem-ipsum-dolor">{{ exp.responsibility_description }}</div>
+                <div class="unique-experience-highlight-container">
+                  <ul class="unique-experience-highlight-un">
+                    <li class="unique-experience-highlight">
+                      Unique experience highlight
+                    </li>
+                    <li class="unique-experience-highlight1">
+                      Unique experience highlight
+                    </li>
+                    <li>Unique experience highlight</li>
+                  </ul>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+          {% endif %}
+        </div>
+      </section>
+    </div>
+    <button type="button" class="download-btn" id="rzp-button1">
+      Proceed to Payment
+    </button>
+  </div>
+
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+  <script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
+  <script>
+    window.addEventListener("load", () => {
+      const pymntbtn = document.getElementById("rzp-button1");
+      pymntbtn.click();
+    });
+  </script>
+  <script>
+    function downloadResume() {
+      window.jsPDF = window.jspdf.jsPDF;
+
+      var doc = new jsPDF();
+
+      var page = document.querySelector(".a4-3");
+
+      doc.html(page, {
+        callback: function (doc) {
+          doc.save("resume.pdf");
+        },
+        margin: [0, 0],
+        x: 0,
+        y: 0,
+        width: 210,
+        windowWidth: 597,
+        useCORS: true,
+        html2canvas: {
+          useCORS: true,
+        },
+      });
+    }
+  </script>
+  <script>
+    var options = {
+      key: "{{ RAZORPAY_API_KEY }}",
+      amount: "{{amount}}00", // Amount is in paise
+      currency: "INR",
+      name: "Taxom India",
+      description: "Payment Description",
+      image: "https://example.com/your_logo.png",
+      order_id: "{{ order_id }}",
+      handler: function (response) {
+        // alert("Payment Successful.Redirecting to download page.");
+        sendPaymentData(response);
+      },
+      prefill: {
+        name: "Taxom India",
+        email: "cvgenerator@taxomindia.in",
+        contact: "9999999999",
+      },
+      notes: {
+        address: "Razorpay Corporate Office",
+      },
+      theme: {
+        color: "#3399cc",
+      },
+    };
+    var rzp1 = new Razorpay(options);
+    document.getElementById("rzp-button1").onclick = function (e) {
+      rzp1.open();
+      e.preventDefault();
+    };
+  </script>
+  <script>
+    function sendPaymentData(response1) {
+      const loader = document.getElementById("loader");
+      loader.style.display = "flex";
+      const payload = JSON.stringify({
+        response1,
+        resume_id: "{{ resume.id }}",
+      });
+      fetch("/payment_process/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": "{{ csrf_token }}",
+        },
+        body: payload,
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          if (data.status == "true") {
+            downloadResume();
+            var loadingDiv = document.querySelector(".loading");
+            const download_again = document.querySelector(".download-again");
+            const newText = "Downloading...";
+            loadingDiv.setAttribute("data-loading-text", newText);
+            setTimeout(() => {
+              download_again.style.display = "flex";
+              loadingDiv.setAttribute("data-loading-text", "Downloaded");
+            }, 2000);
+
+            console.log("success");
+          } else {
+            console.log("failed");
+            window.location = "/payment_failed";
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  </script>
+
+<script>
+  const stars = document.querySelectorAll('.feedback-star-widget .feeback-stars');
+   const ratingInput = document.getElementById('rating');
+  //  const form = document.getElementById('feedback-form');
+   const post = document.querySelector('.feedback-post');
+   const widget = document.querySelector('.feedback-star-widget');
+   const feedbacksubmit = document.getElementById('feedback-submit-btn')
+   document.getElementById("feedback-rate-5").checked = true;
+   stars.forEach(star => {
+       star.addEventListener('change', () => {
+           ratingInput.value = star.value;
+       });
+   });
+
+   feedbacksubmit.addEventListener('click',function(){
+    const buttonTextElement = document.querySelector(".button-text");
+    const loadingIndicatorElement = document.querySelector(".loading-indicator");
+    const textareaFeedback = document.getElementsByName('feedback-text')[0];
+    const feedbackemail = document.getElementById('feedback-email')
+    buttonTextElement.style.display = "none";
+    loadingIndicatorElement.style.display = "block";
+
+       const formDict = {
+         'rating': ratingInput.value,
+         'rating_text': textareaFeedback.value,
+         'feedback_email': feedbackemail.value,
+         'resume_id': "{{ resume.id }}",
+       };
+
+      const payload = JSON.stringify({
+        formDict,
+      });
+      fetch("/submit_feedback/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": "{{ csrf_token }}",
+        },
+        body: payload,
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.status == "true") {
+            widget.style.display = "none";
+            post.style.display = "block";
+            buttonTextElement.style.display = "inline-block";
+            loadingIndicatorElement.style.display = "none";
+            console.log("success");
+          } else {
+            console.log(data['error']);
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+   })
+</script>
+</body>
+</html>

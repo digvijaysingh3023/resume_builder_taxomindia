@@ -35,15 +35,12 @@ def create_cv(request):
         contact_info = request.POST.get('contact_info')
         email_web = request.POST.get('email_web')
         website = request.POST.get('website')
-        # profession = request.POST.get('profession')
         profile_descrition = request.POST.get('profile_text')
         profile_photo = request.FILES.get('profile_photo')
         phone = request.POST.get('phone')
         languages_known = request.POST.get('languages_known').split(',')
         skills = request.POST.get('skills').split(',')
-
-        # if profession:
-        #     profession = profession.upper()
+        templatecolor = request.POST.get('selectedColor')
 
         experiences = []
         for key in request.POST:
@@ -54,6 +51,8 @@ def create_cv(request):
                     while len(experiences) <= index:
                         experiences.append({})
                     experiences[index][key.split('][')[1].split(']')[0]] = request.POST[key]
+                    if key.split('][')[1].split(']')[0] == 'present' and request.POST[key] == 'on':
+                        experiences[index]['end_year'] = 'Present'
 
         educations = []
         for key in request.POST:
@@ -64,6 +63,36 @@ def create_cv(request):
                     while len(educations) <= index:
                         educations.append({})
                     educations[index][key.split('][')[1].split(']')[0]] = request.POST[key]
+
+        projects = []
+        for key in request.POST:
+            if key.startswith('projects['):
+                index = key.split('[')[1].split(']')[0]
+                if index.isdigit():
+                    index = int(index)
+                    while len(projects) <= index:
+                        projects.append({})
+                    projects[index][key.split('][')[1].split(']')[0]] = request.POST[key]
+
+        awards = []
+        for key in request.POST:
+            if key.startswith('awards['):
+                index = key.split('[')[1].split(']')[0]
+                if index.isdigit():
+                    index = int(index)
+                    while len(awards) <= index:
+                        awards.append({})
+                    awards[index][key.split('][')[1].split(']')[0]] = request.POST[key]
+
+        responsibilities = []
+        for key in request.POST:
+            if key.startswith('responsibilities['):
+                index = key.split('[')[1].split(']')[0]
+                if index.isdigit():
+                    index = int(index)
+                    while len(responsibilities) <= index:
+                        responsibilities.append({})
+                    responsibilities[index][key.split('][')[1].split(']')[0]] = request.POST[key]
 
         resume_ref = db.collection('resumes').document()
         mime = magic.Magic(mime=True)
@@ -80,22 +109,26 @@ def create_cv(request):
             'contact_info': contact_info,
             'email_web': email_web,
             'website': website,
-            'profile_description':profile_descrition,
+            'profile_description': profile_descrition,
             'profile_photo': blob.public_url,
             'languages_known': languages_known,
             'phone': phone,
             'skills': skills,
             'education': educations,
             'experience': experiences,
-            'payment_status':False,
+            'projects': projects,
+            'awards': awards,
+            'responsibilities': responsibilities,
+            'payment_status': False,
+            'templatecolor':templatecolor,
         }
-
+        
         resume_ref.set(resume_data)
 
         resume_id = resume_ref.id
 
-        return redirect('resume_preview', resume_id = resume_id)
-    return render(request,'main/index.html')
+        return redirect('resume_preview', resume_id=resume_id)
+    return render(request, 'main/index.html')
 
 
 def resume_preview(request, resume_id):
@@ -111,7 +144,7 @@ def resume_preview(request, resume_id):
             'resume' : resume_details,
             'RAZORPAY_API_KEY':os.getenv('RAZORPAY_API_KEY')
         }
-        return render(request, 'main/resume_preview.html', context)
+        return render(request, 'main/template2.html', context)
     
     return HttpResponse('Something went wrong.Try Again Later')
 
@@ -173,7 +206,6 @@ def payment_success(request, resume_id):
 def payment_failed(request):
     return render(request, 'main/payment_failed.html')
 
-
 def getPrompt(form_data):
     input_text = form_data.get('profile_text', '')
     first_name = form_data.get('first_name', '')
@@ -185,6 +217,10 @@ def getPrompt(form_data):
     phone = form_data.get('phone', '')
     skills = form_data.get('skills', '')
     input_text = form_data.get('input_text')
+    
+    past_projects = form_data.get('past_projects', '')
+    academic_awards = form_data.get('academic_awards', '')
+    responsibilities_handled = form_data.get('responsibilities_handled', '')
 
     experiences = []
     for key in form_data:
@@ -208,14 +244,29 @@ def getPrompt(form_data):
 
     experience_text = ""
     for exp in experiences:
-        experience_text += f"{first_name} have experience as a {exp['job_title']} at {exp['company']} company in ({exp['year']}), "
+        if 'present' in exp and exp['present'] == 'Present':
+            experience_text += f"{first_name} is currently working as a {exp['job_title']} at {exp['company']}. "
+        else:
+            experience_text += f"{first_name} has worked as a {exp['job_title']} at {exp['company']} from {exp['start_year']} to {exp['end_year']}. "
 
     education_text = ""
     for edu in educations:
-        education_text += f" {first_name} holds a {edu['degree']} degree from {edu['institution']} ({edu['year']}), "
+        education_text += f"{first_name} holds a {edu['degree']} degree from {edu['institution']} ({edu['start_year']} - {edu['end_year']}). "
+
+    projects_text = ""
+    if past_projects:
+        projects_text = f"{first_name} has worked on projects such as {past_projects}. "
+
+    awards_text = ""
+    if academic_awards:
+        awards_text = f"{first_name} has received awards including {academic_awards}. "
+
+    responsibilities_text = ""
+    if responsibilities_handled:
+        responsibilities_text = f"{first_name} has handled responsibilities such as {responsibilities_handled}. "
 
     prompt = f"""
-    Create a 4-5 sentence bio for the user with the following info. Highlight his skills and experience:
+    Create a 4-5 sentence bio for the user with the following info. Highlight their skills and experience:
     Name: {first_name} {last_name}
     Profession: {profession}
     About: '{input_text}'
@@ -223,9 +274,13 @@ def getPrompt(form_data):
     Skills: {skills}
     Educations: {education_text.strip(', ')}
     Experiences: {experience_text.strip(', ')}
+    Projects: {projects_text.strip(', ')}
+    Awards: {awards_text.strip(', ')}
+    Responsibilities: {responsibilities_text.strip(', ')}
     Note: The experiences field may be empty. If so, focus more on skills and education.
     """
     return prompt
+
 
 def enhance_text(request):
     if request.method == 'POST':
@@ -243,3 +298,32 @@ def enhance_text(request):
         return JsonResponse({
             'enhanced_text':enhancedText,
         })
+    
+def submitFeedback(request):
+    if(request.method == 'POST'):
+        body_unicode = request.body.decode('utf-8')
+        body_data = json.loads(body_unicode)
+
+        rating = body_data.get('rating')
+        rating_text = body_data.get('feedback-text')
+        feedback_email = body_data.get('feedback-email')
+
+        resume_ref = db.collection('feedbacks').document()
+
+        resume_ref.set({
+            'rating':rating,
+            'rating_text':rating_text,
+            'feedback_email':feedback_email,
+            'resume_id':body_data.get('resume_id')
+        })
+
+        return JsonResponse({
+            'status':"true"
+        })
+
+    else:
+        return JsonResponse({
+            'Error':"Something went wrong while submitting feedback."
+        })
+
+

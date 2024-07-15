@@ -10,4 +10,5 @@ urlpatterns = [
     path('payment_process/', payment_process, name='payment_process'),
     path('payment_failed/', payment_failed, name='payment_failed'),
     path('enhance/', enhance_text, name='enhance_text'),
+    path('submit_feedback/', submitFeedback, name='submit_feedback'),
 ]

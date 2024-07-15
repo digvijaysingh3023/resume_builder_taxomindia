@@ -1,140 +1,125 @@
-{% load static %}
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Resume Form</title>
-    <link rel="stylesheet" href="{% static 'css/index.css' %}" />
-  </head>
-  <body>
-    <div id="loader" class="loader">
-      <div class="loading" data-loading-text="Preparing Your Resume..."></div>
+<html lang="en">
+{% load static %}
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Resume Form</title>
+  <link rel="stylesheet" href="{% static 'css/index.css' %}" />
+</head>
+
+<body>
+  <div id="loader" class="loader">
+    <div class="loading" data-loading-text="Crafting an AI-Enhanced Resume..."></div>
+  </div>
+  <div class="main-container-home">
+    <div class="left-container">
+      <div></div>
     </div>
-    <div class="main-container-home">
-      <div class="left-container">
-        <div>Write Your Dream Resume in Minutes!</div>
+    <div class="right-container">
+      <div class="write_resume_text">
+        <p>
+          Write Your Dream Resume in Minutes!
+        </p>
       </div>
-      <div class="right-container">
-        <form
-          id="resumeForm"
-          method="post"
-          action="{% url 'create_cv' %}"
-          enctype="multipart/form-data"
-        >
-          {% csrf_token %}
+      <img src="{% static 'images/resume_preview.jpeg' %}" alt="" />
+      <form id="resumeForm" method="post" action="{% url 'create_cv' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h1>Resume</h1>
+        <label for="selectedColor">Select Template Color </label>
+        <div class="color-bar">
+          <div class="color-option selected" style="background-color: #0000FF;" data-color="#0000FF"></div>
+          <div class="color-option" style="background-color: #1E3A5F;" data-color="#1E3A5F"></div>
+          <div class="color-option" style="background-color: #008080;" data-color="#008080"></div>
+          <div class="color-option" style="background-color: #2E8B57;" data-color="#2E8B57"></div>
+          <div class="color-option" style="background-color: #654321;" data-color="#654321"></div>
+        </div>
+        <input type="hidden" id="selected-color" name="selectedColor" value="#0000FF">
 
 
-          <h1>Resume</h1>
-
-          <label for="first_name">Name:</label>
-          <div class="name-wrapper">
-            <input type="text" id="first_name" name="first_name" required placeholder="First Name"/>
-            <input type="text" id="middle_name" name="middle_name" placeholder="Middle Name"/>
-            <input type="text" id="last_name" name="last_name" placeholder="Last Name"/>
-          </div>
-          
-          <label for="imageInput">Profile Photo </label>
-        <!-- <div class="upload-box" onclick="document.getElementById('imageInput').click();">
-          <span class="upload-icon">&#x21E1;</span>
-        </div> -->
-        
+        <label for="first_name">Name:</label>
+        <div class="name-wrapper">
+          <input type="text" id="first_name" name="first_name" required placeholder="First Name" />
+          <input type="text" id="middle_name" name="middle_name" placeholder="Middle Name" />
+          <input type="text" id="last_name" name="last_name" placeholder="Last Name" />
+        </div>
+        <label for="imageInput">Profile Photo </label>
         <input type="file" id="imageInput" name="profile_photo" accept="image/*" required />
-          <label for="email_web">Email:</label>
-          <input type="email" id="email_web" name="email_web" required /><br />
-    
-          <label for="website">Website:</label>
-          <input type="text" id="website" name="website" /><br />
-    
-          <label for="languages_known">Languages Known (Comma Separated):</label>
-          <input
-            type="text"
-            id="languages_known"
-            name="languages_known"
-            required
-          /><br />
-    
-          <label for="phone">Phone:</label>
-          <input type="tel" id="phone" name="phone" required /><br />
-    
-          <label>Skills (Comma Separated):</label>
-          <input type="text" id="skills" name="skills" required /><br />
-    
-          <h2>Experiences</h2>
-          <div id="experiencesContainer">
+        <div class="name-wrapper">
+          <div style="flex: 1">
+            <label for="email_web">Email:</label>
+            <input type="email" id="email_web" name="email_web" required /><br />
           </div>
-          <button type="button" onclick="addExperience()">Add Experience</button
-          ><br />
-    
-          <h2>Educations</h2>
-          <div id="educationsContainer">
-            <div class="education">
-              <fieldset>
-                <legend>Education 1</legend>
-                <label for="degree_0">Degree:</label>
-                <input
-                  type="text"
-                  id="degree_0"
-                  name="educations[0][degree]"
-                  required
-                /><br />
-    
-                <label for="institution_0">Institution:</label>
-                <input
-                  type="text"
-                  id="institution_0"
-                  name="educations[0][institution]"
-                  required
-                /><br />
-    
-                <label for="year_0">Year:</label>
-                <input
-                  type="text"
-                  id="year_0"
-                  name="educations[0][year]"
-                  required
-                /><br />
-    
-                <span class="remove-button" style="visibility: hidden">Remove</span>
-              </fieldset>
+          <div style="flex: 1">
+            <label for="phone">Phone:</label>
+            <input type="tel" id="phone" name="phone" required /><br />
+          </div>
+        </div>
+
+        <label for="website">LinkedIn URL:</label>
+        <input type="text" id="website" name="website" /><br />
+        <label for="languages_known">Languages Known (Comma Separated):</label>
+        <input type="text" id="languages_known" name="languages_known" required /><br />
+        <label>Skills (Comma Separated):</label>
+        <input type="text" id="skills" name="skills" required /><br />
+
+        <h2>Experience</h2>
+        <div id="experiencesContainer"></div>
+        <button type="button" onclick="addExperience()">Add Experience</button><br />
+
+        <h2>Education</h2>
+        <div id="educationsContainer"></div>
+        <button type="button" onclick="addEducation()">Add Education</button><br /><br />
+
+        <h2>Past Projects</h2>
+        <div id="projectsContainer"></div>
+        <button type="button" onclick="addProject()">Add Project</button><br />
+
+        <h2>Academic Awards</h2>
+        <div id="awardsContainer"></div>
+        <button type="button" onclick="addAward()">Add Award</button><br />
+
+        <h2>Responsibilities Handled</h2>
+        <div id="responsibilitiesContainer"></div>
+        <button type="button" onclick="addResponsibility()">
+          Add Responsibility</button><br />
+
+        <label for="profile_text">Few Lines about yourself: (not more than 30-35 words)</label>
+        <div class="profile_text_cont">
+          <textarea type="text" id="input-text" name="profile_text" rows="4" required></textarea><br />
+          <button type="button" class="enhance-button" id="enhance-button" onclick="getTextFromAI()">
+            <span class="button-text">Enhance with AI</span>
+            <div class="loading-indicator">
+              <div class="spinner1"></div>
             </div>
-          </div>
-          <button type="button" onclick="addEducation()">Add Education</button
-          ><br /><br />
-    
-          <label for="profile_text">Few Lines about yourself: (not more than 30-35 words)</label>
-          <div class="profile_text_cont">
-            <textarea
-              type="text"
-              id="input-text"
-              name="profile_text"
-              rows="4"
-              required
-            ></textarea>
-            <br /><button
-              type="button"
-              class="enhance-button"
-              id="enhance-button"
-              onclick="getTextFromAI()"
-            >
-              <span class="button-text">Enhance with AI</span>
-              <div class="loading-indicator">
-                <div class="spinner1"></div>
-              </div>
-            </button>
-          </div>
-    
-          <button type="submit">Submit</button>
-        </form>
-      </div>
+          </button>
+        </div>
+        <button class="submitBtn" type="submit">
+          Pay ₹ <span style="text-decoration: line-through">199</span> 99 &
+          Download
+        </button>
+      </form>
+    </div>
 
     <script>
       const form = document.querySelector("form");
       const loader = document.getElementById("loader");
+      var isClicked = false
 
       form.addEventListener("submit", (event) => {
         event.preventDefault();
         loader.style.display = "flex";
         form.submit();
       });
+
+      const btn = document.getElementsByClassName("submitBtn")[0];
+      btn.addEventListener('click', () => {
+        if (isClicked === false) {
+          console.log('clicked');
+          alert("Use enhance with AI option first.")
+        }
+      })
     </script>
 
     <script>
@@ -146,14 +131,16 @@
         const loadingIndicatorElement =
           buttonElement.querySelector(".loading-indicator");
 
-          if (inputText === "") {
-            alert("Enter some text to use AI.");
-            return;
-          }
-          if (!form.checkValidity()) {
-            alert("Please fill out all required fields before using Enhance with AI.");
-            return;
-          }
+        if (inputText === "") {
+          alert("Enter some text to use AI.");
+          return;
+        }
+        if (!form.checkValidity()) {
+          alert(
+            "Please fill out all required fields before using Enhance with AI."
+          );
+          return;
+        }
 
         const formData = new FormData(form);
         const formDict = {};
@@ -188,6 +175,7 @@
               buttonTextElement.style.display = "inline-block";
               loadingIndicatorElement.style.display = "none";
               document.getElementById("input-text").value = data.enhanced_text;
+              isClicked = true;
             }, 1500);
           })
           .catch((error) => {
@@ -206,20 +194,33 @@
         const div = document.createElement("div");
         div.classList.add("experience");
         div.innerHTML = `
-                <fieldset>
-                    <legend>Experience ${index + 1}</legend>
-                    <label for="job_title_${index}">Job Title:</label>
-                    <input type="text" id="job_title_${index}" name="experiences[${index}][job_title]" required><br>
+                    <fieldset>
+                        <legend>Experience ${index + 1}</legend>
+                        <label for="job_title_${index}">Job Title:</label>
+                        <input type="text" id="job_title_${index}" name="experiences[${index}][job_title]" required><br>
 
-                    <label for="company_${index}">Company:</label>
-                    <input type="text" id="company_${index}" name="experiences[${index}][company]" required><br>
+                        <label for="company_${index}">Company:</label>
+                        <input type="text" id="company_${index}" name="experiences[${index}][company]" required><br>
 
-                    <label for="year_${index}">Year:</label>
-                    <input type="text" id="year_${index}" name="experiences[${index}][year]" required><br>
+                        <label for="description_${index}">Description:</label>
+                        <textarea id="description_${index}" name="experiences[${index}][description]" required></textarea><br>
+                        <div class="name-wrapper">
+                        <div style = "flex:1">
+                        <label for="start_year_${index}">Start Year:</label>
+                        <input type="number" id="start_year_${index}" name="experiences[${index}][start_year]" required><br>
+                        </div>
+                        <div style = "flex:1">
+                        <label for="end_year_${index}">End Year:</label>
+                        <input type="number" id="end_year_${index}" name="experiences[${index}][end_year]" required ><br>
+                        </div>
+                        </div>
 
-                    <span class="remove-button" onclick="removeExperience(this)">Remove</span>
-                </fieldset>
-            `;
+                        <label for="present_${index}">Present:</label>
+                        <input type="checkbox" id="present_${index}" name="experiences[${index}][present]" value="Present" onclick="toggleEndYear(${index})"><br>
+
+                        <span class="remove-button" onclick="removeExperience(this)">Remove</span>
+                    </fieldset>
+                `;
         container.appendChild(div);
         updateExperienceIndexes();
       }
@@ -228,6 +229,15 @@
         const container = document.getElementById("experiencesContainer");
         container.removeChild(button.parentNode.parentNode);
         updateExperienceIndexes();
+      }
+
+      function toggleEndYear(index) {
+        const endYearInput = document.getElementById(`end_year_${index}`);
+        const presentCheckbox = document.getElementById(`present_${index}`);
+        endYearInput.disabled = presentCheckbox.checked;
+        if (presentCheckbox.checked) {
+          endYearInput.value = "";
+        }
       }
 
       function updateExperienceIndexes() {
@@ -252,20 +262,29 @@
         const div = document.createElement("div");
         div.classList.add("education");
         div.innerHTML = `
-                <fieldset>
-                    <legend>Education ${index + 1}</legend>
-                    <label for="degree_${index}">Degree:</label>
-                    <input type="text" id="degree_${index}" name="educations[${index}][degree]" required><br>
+                    <fieldset>
+                        <legend>Education ${index + 1}</legend>
+                        <label for="degree_${index}">Degree:</label>
+                        <input type="text" id="degree_${index}" name="educations[${index}][degree]" required><br>
 
-                    <label for="institution_${index}">Institution:</label>
-                    <input type="text" id="institution_${index}" name="educations[${index}][institution]" required><br>
+                        <label for="institution_${index}">Institution:</label>
+                        <input type="text" id="institution_${index}" name="educations[${index}][institution]" required><br>
 
-                    <label for="year_${index}">Year:</label>
-                    <input type="text" id="year_${index}" name="educations[${index}][year]" required><br>
-
-                    <span class="remove-button" onclick="removeEducation(this)">Remove</span>
-                </fieldset>
-            `;
+                        <label for="description_${index}">Description:</label>
+                        <textarea id="description_${index}" name="educations[${index}][description]" required></textarea><br>
+                        <div class="name-wrapper">
+                        <div style = "flex:1">
+                        <label for="start_year_${index}">Start Year:</label>
+                        <input type="text" id="start_year_${index}" name="educations[${index}][start_year]" required><br>
+                        </div>
+                        <div style="flex:1">
+                        <label for="end_year_${index}">End Year:</label>
+                        <input type="text" id="end_year_${index}" name="educations[${index}][end_year]" required><br>
+                        </div>
+                        </div>
+                        <span class="remove-button" onclick="removeEducation(this)">Remove</span>
+                    </fieldset>
+                `;
         container.appendChild(div);
         updateEducationIndexes();
       }
@@ -290,6 +309,188 @@
           });
         }
       }
+
+      function addProject() {
+        const container = document.getElementById("projectsContainer");
+        const index = container.children.length;
+
+        const div = document.createElement("div");
+        div.classList.add("project");
+        div.innerHTML = `
+                    <fieldset>
+                        <legend>Project ${index + 1}</legend>
+                        <div class="name-wrapper">
+                        <div style = "flex:1">
+                        <label for="project_title_${index}">Project Title:</label>
+                        <input type="text" id="project_title_${index}" name="projects[${index}][project_title]"><br>
+                        </div>
+                        <div style = "flex:1">
+                            <label for="project_year_${index}">Year:</label>
+                            <input type="number" id="project_year_${index}" name="projects[${index}][project_year]"><br>
+                        </div>
+                        </div>
+                        <label for="project_description_${index}">Description:</label>
+                        <textarea id="project_description_${index}" name="projects[${index}][project_description]"></textarea><br>
+
+
+                        <span class="remove-button" onclick="removeProject(this)">Remove</span>
+                    </fieldset>
+                `;
+        container.appendChild(div);
+        updateProjectIndexes();
+      }
+
+      function removeProject(button) {
+        const container = document.getElementById("projectsContainer");
+        container.removeChild(button.parentNode.parentNode);
+        updateProjectIndexes();
+      }
+
+      function updateProjectIndexes() {
+        const container = document.getElementById("projectsContainer");
+        const projects = container.getElementsByClassName("project");
+        for (let i = 0; i < projects.length; i++) {
+          const fieldset = projects[i].querySelector("fieldset");
+          fieldset.querySelector("legend").innerText = `Project ${i + 1}`;
+          fieldset.querySelectorAll("input, textarea").forEach((input) => {
+            const name = input.name;
+            const id = input.id;
+            input.name = name.replace(/\[\d+\]/, `[${i}]`);
+            input.id = id.replace(/_\d+/, `_${i}`);
+          });
+        }
+      }
+
+      function addAward() {
+        const container = document.getElementById("awardsContainer");
+        const index = container.children.length;
+
+        const div = document.createElement("div");
+        div.classList.add("award");
+        div.innerHTML = `
+                    <fieldset>
+                        <legend>Award ${index + 1}</legend>
+                        <div class="name-wrapper">
+                        <div style = "flex:1">
+                        <label for="award_title_${index}">Award Title:</label>
+                        <input type="text" id="award_title_${index}" name="awards[${index}][award_title]"><br>
+                        </div>
+                        <div style="flex:1">
+                            
+                            <label for="award_year_${index}">Year:</label>
+                            <input type="number" id="award_year_${index}" name="awards[${index}][award_year]"><br>
+                            </div>
+                            </div>
+                            <label for="award_description_${index}">Description:</label>
+                            <textarea id="award_description_${index}" name="awards[${index}][award_description]"></textarea><br>
+
+                        <span class="remove-button" onclick="removeAward(this)">Remove</span>
+                    </fieldset>
+                `;
+        container.appendChild(div);
+        updateAwardIndexes();
+      }
+
+      function removeAward(button) {
+        const container = document.getElementById("awardsContainer");
+        container.removeChild(button.parentNode.parentNode);
+        updateAwardIndexes();
+      }
+
+      function updateAwardIndexes() {
+        const container = document.getElementById("awardsContainer");
+        const awards = container.getElementsByClassName("award");
+        for (let i = 0; i < awards.length; i++) {
+          const fieldset = awards[i].querySelector("fieldset");
+          fieldset.querySelector("legend").innerText = `Award ${i + 1}`;
+          fieldset.querySelectorAll("input, textarea").forEach((input) => {
+            const name = input.name;
+            const id = input.id;
+            input.name = name.replace(/\[\d+\]/, `[${i}]`);
+            input.id = id.replace(/_\d+/, `_${i}`);
+          });
+        }
+      }
+
+      function addResponsibility() {
+        const container = document.getElementById(
+          "responsibilitiesContainer"
+        );
+        const index = container.children.length;
+
+        const div = document.createElement("div");
+        div.classList.add("responsibility");
+        div.innerHTML = `
+                    <fieldset>
+                        <legend>Responsibility ${index + 1}</legend>
+                        <div class="name-wrapper">
+                        <div style = "flex:1">
+                            <label for="responsibility_title_${index}">Responsibility Title:</label>
+                            <input type="text" id="responsibility_title_${index}" name="responsibilities[${index}][responsibility_title]"><br>
+                            </div>
+                            
+                            <div style = "flex:1">
+                                
+                            <label for="responsibility_year_${index}">Year:</label>
+                            <input type="number" id="responsibility_year_${index}" name="responsibilities[${index}][responsibility_year]"><br>
+                            </div>
+                            </div>
+                            <label for="responsibility_description_${index}">Description:</label>
+                            <textarea id="responsibility_description_${index}" name="responsibilities[${index}][responsibility_description]"></textarea><br>
+
+                        <span class="remove-button" onclick="removeResponsibility(this)">Remove</span>
+                    </fieldset>
+                `;
+        container.appendChild(div);
+        updateResponsibilityIndexes();
+      }
+
+      function removeResponsibility(button) {
+        const container = document.getElementById(
+          "responsibilitiesContainer"
+        );
+        container.removeChild(button.parentNode.parentNode);
+        updateResponsibilityIndexes();
+      }
+
+      function updateResponsibilityIndexes() {
+        const container = document.getElementById(
+          "responsibilitiesContainer"
+        );
+        const responsibilities =
+          container.getElementsByClassName("responsibility");
+        for (let i = 0; i < responsibilities.length; i++) {
+          const fieldset = responsibilities[i].querySelector("fieldset");
+          fieldset.querySelector("legend").innerText = `Responsibility ${i + 1
+            }`;
+          fieldset.querySelectorAll("input, textarea").forEach((input) => {
+            const name = input.name;
+            const id = input.id;
+            input.name = name.replace(/\[\d+\]/, `[${i}]`);
+            input.id = id.replace(/_\d+/, `_${i}`);
+          });
+        }
+      }
     </script>
-  </body>
+    <script>
+      document.querySelectorAll('.color-option').forEach(option => {
+        option.addEventListener('click', function () {
+
+          document.querySelectorAll('.color-option').forEach(opt => opt.classList.remove('selected'));
+
+          this.classList.add('selected');
+
+          const selectedColor = this.getAttribute('data-color');
+
+          console.log('Selected color:', selectedColor);
+
+          document.body.style.backgroundColor = selectedColor;
+
+          document.getElementById('selected-color').value = selectedColor;
+        });
+      });
+    </script>
+  </div>
+</body>
+
 </html>
