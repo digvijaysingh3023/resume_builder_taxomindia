@@ -58,7 +58,7 @@
                     <input type="email" id="feedback-email" name="feedback-email" placeholder="Feedback Email" required/>
                     <div class="feedback-btn">
                         <button id="feedback-submit-btn">
-                              <p class="button-text">Post</p>
+                              <p class="button-text">Submit</p>
                               <div class="loading-indicator">
                                 <div class="spinner1"></div>
                               </div>
@@ -86,15 +86,15 @@
               <div class="role-title-shape"></div>
             </div>
             <div class="uxui-designer-product-container">
-              <p class="uxui-designer">UX/UI DESIGNER</p>
-              <p class="product-designer">PRODUCT DESIGNER</p>
-              <p class="ux-researcher">UX RESEARCHER</p>
+              <p class="uxui-designer">{{resume.profession}}</p>
+              <!-- <p class="product-designer">PRODUCT DESIGNER</p>
+              <p class="ux-researcher">UX RESEARCHER</p> -->
             </div>
           </div>
           <div class="location-icon-parent">
-            <img class="location-icon" loading="lazy" alt="" src="{% static 'images/vector.svg' %}" />
+            <img class="location-icon" loading="lazy" alt="" src="{% static 'images/location.png' %}" />
 
-            <div class="berlin-germany">Berlin, Germany</div>
+            <div class="berlin-germany">{{resume.location}}</div>
           </div>
         </div>
         <div class="education-parent">

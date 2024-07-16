@@ -1272,16 +1272,21 @@ formi .feedback-btn {
 formi .feedback-btn button {
   height: 100%;
   width: 100%;
-  border: 1px solid #444;
   outline: none;
-  background: #ff4b4b;
   border-radius: 20px;
-  color: #fff;
   font-size: 17px;
   font-weight: 500;
   text-transform: uppercase;
-  cursor: pointer;
   transform: all 0.3s ease;
+  background-color: #4aca4a;
+  color: white;
+  border: none; 
+  padding: 10px 20px;
+  cursor: pointer; 
+  position: relative; 
+  display: inline-flex; 
+  align-items: center;
+  justify-content: center;
 }
 
 .loading-indicator {

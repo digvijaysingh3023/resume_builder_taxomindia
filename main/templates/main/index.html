@@ -57,8 +57,29 @@
           </div>
         </div>
 
-        <label for="website">LinkedIn URL:</label>
-        <input type="text" id="website" name="website" /><br />
+        <label for="job-title">Select Job Title:</label>
+        <select id="job-title" name="job-title">
+            <option value="Software Engineer">Software Engineer</option>
+            <option value="Data Scientist">Data Scientist</option>
+            <option value="Product Manager">Product Manager</option>
+            <option value="UX Designer">UX Designer</option>
+            <option value="Marketing Specialist">Marketing Specialist</option>
+            <option value="Sales Manager">Sales Manager</option>
+            <option value="HR Manager">HR Manager</option>
+            <option value="Financial Analyst">Financial Analyst</option>
+            <option value="Graphic Designer">Graphic Designer</option>
+            <option value="Operations Manager">Operations Manager</option>
+        </select>
+        <div class="name-wrapper">
+          <div style="flex: 1">
+            <label for="website">LinkedIn URL:</label>
+            <input type="text" id="website" name="website" /><br />
+          </div>
+          <div style="flex: 1">
+            <label for="location">Location:</label>
+            <input type="text" id="location" name="location" required /><br />
+          </div>
+        </div>
         <label for="languages_known">Languages Known (Comma Separated):</label>
         <input type="text" id="languages_known" name="languages_known" required /><br />
         <label>Skills (Comma Separated):</label>

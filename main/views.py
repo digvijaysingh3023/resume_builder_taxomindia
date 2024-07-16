@@ -41,6 +41,8 @@ def create_cv(request):
         languages_known = request.POST.get('languages_known').split(',')
         skills = request.POST.get('skills').split(',')
         templatecolor = request.POST.get('selectedColor')
+        profession = request.POST.get('job-title')
+        location = request.POST.get('location')
 
         experiences = []
         for key in request.POST:
@@ -121,6 +123,8 @@ def create_cv(request):
             'responsibilities': responsibilities,
             'payment_status': False,
             'templatecolor':templatecolor,
+            'profession':profession.upper(),
+            'location':location
         }
         
         resume_ref.set(resume_data)
