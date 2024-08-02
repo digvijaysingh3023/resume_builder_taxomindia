@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume</title>
+    <style>
+        /* General styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.5;
+            color: #333;
+            font-size: 11px;
+        }
+
+        /* Container for the resume */
+        .resume-container {
+            width: 17cm;
+            border: solid;
+            margin: auto;
+            padding: 10px;
+        }
+
+        /* Header section */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 2px solid #333;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 22px;
+        }
+
+        .header p {
+            margin: 0;
+        }
+
+        /* Section titles */
+        .section-title {
+            font-size: 11.5px;
+            font-weight: bold;
+            color: #444;
+            border: 1px solid #444;
+            background-color: #f2f2f2;
+            padding-left: 5px;
+        }
+
+        /* Sections */
+        .section {
+            margin-bottom: 10px;
+        }
+
+        .section table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 10px;
+        }
+
+        .section th,
+        .section td {
+            text-align: left;
+            padding: 5px;
+            border: 1px solid #333;
+        }
+
+        .section th {
+            background-color: #f2f2f2;
+        }
+
+        .section .details ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .section .details ul li {
+            margin-bottom: 5px;
+        }
+
+        /* Specific styling for padding between boxes */
+        .section:not(:last-child) {
+            margin-bottom: 10px;
+        }
+
+        .achievements ul,.extra-curricular ul {
+            margin: 0;
+            padding-inline-start: 20px;
+        }
+
+        .achievement-cont {
+            display: flex;
+        }
+
+        .achievement-text {
+            border-right: 1px solid #333;
+            /* padding-right: 15px; */
+            flex:14;
+        }
+
+        .achievement-year {
+            flex:1;
+            padding: 0 5px;
+        }
+
+        .achievements {
+            border: 1px solid #333;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="resume-container">
+        <div class="header">
+            <div>
+                <h1>Firstname Lastname</h1>
+                <p>Male/Female, XX years</p>
+
+            </div>
+            <div>
+                img here
+            </div>
+        </div>
+
+        <div class="section education">
+            <div class="section-title">EDUCATIONAL QUALIFICATIONS</div>
+            <table>
+                <tr>
+                    <th>Degree</th>
+                    <th>Institution</th>
+                    <th>Percentage</th>
+                    <th>Year</th>
+                </tr>
+                <tr>
+                    <td>MBA</td>
+                    <td>IIM Indore</td>
+                    <td>-</td>
+                    <td>2026</td>
+                </tr>
+                <tr>
+                    <td>B.Tech, Electrical</td>
+                    <td>IIT Delhi</td>
+                    <td>80.96% (Rank X, Batch Size - 400)</td>
+                    <td>2024</td>
+                </tr>
+                <tr>
+                    <td>Class XII, CBSE</td>
+                    <td>ABC School, New Delhi</td>
+                    <td>92.20% (Rank X, Batch Size - 390)</td>
+                    <td>2019</td>
+                </tr>
+                <tr>
+                    <td>Class X, Gujarat Board</td>
+                    <td>ABC School, New Delhi</td>
+                    <td>93.40% (Rank X, Batch Size - 390)</td>
+                    <td>2017</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section achievements">
+            <div class="section-title">ACADEMIC & CO-CURRICULAR ACHIEVEMENTS</div>
+            <ul>
+                <li>
+                    <div class="achievement-cont">
+                        <div class="achievement-text">Cleared CFA/FRM Level X conducted by CFA Institute/GARP, USA and
+                            secured XX+ marks in X out of X number of subjects</div>
+                        <div class="achievement-year">2021</div>
+                    </div>
+                </li>
+                <li>
+                    <div class="achievement-cont">
+                        <div class="achievement-text">Cleared CFA/FRM Level X conducted by CFA Institute/GARP, USA and
+                            secured XX+ marks in X out of X number of subjects</div>
+                        <div class="achievement-year">2021</div>
+                    </div>
+                </li>
+                <li>
+                    <div class="achievement-cont">
+                        <div class="achievement-text">Cleared CFA/FRM Level X conducted by CFA Institute/GARP, USA and
+                            secured XX+ marks in X out of X number of subjects</div>
+                        <div class="achievement-year">2021</div>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+
+        <div class="section internships">
+            <div class="section-title">INTERNSHIPS</div>
+            <table>
+                <tr>
+                    <th>Company Name 1, Location</th>
+                    <th>Project Title/Company Division</th>
+                    <th>April 2018-April 2019</th>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <div class="details">
+                            <ul>
+                                <li>
+                                    Examined and analysed simple mechanical structures under 3 different loading
+                                    conditions using HyperMesh and Nastran software
+                                </li>
+                                <li>
+                                    Examined and analysed simple mechanical structures under 3 different loading
+                                    conditions using HyperMesh and Nastran software
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Company Name 1, Location</th>
+                    <th>Project Title/Company Division</th>
+                    <th>April 2018-April 2019</th>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <div class="details">
+                            <ul>
+                                <li>
+                                    Examined and analysed simple mechanical structures under 3 different loading
+                                    conditions using HyperMesh and Nastran software
+                                </li>
+                                <li>
+                                    Examined and analysed simple mechanical structures under 3 different loading
+                                    conditions using HyperMesh and Nastran software
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section projects">
+            <div class="section-title">PROJECTS & RESEARCH PAPERS</div>
+            <table>
+                <tr>
+                    <th>Title of Academic Project 1</th>
+                    <th>Aug ’19</th>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div class="details">
+                            <ul>
+                                <li>Recorded an improvement of 11% + in the final classification score with 70%
+                                    reduction in model training time</li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>Title of Academic Project 1</th>
+                    <th>Aug ’19</th>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div class="details">
+                            <ul>
+                                <li>Recorded an improvement of 11% + in the final classification score with 70%
+                                    reduction in model training time</li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section positions">
+            <div class="section-title">POSITIONS OF RESPONSIBILITY</div>
+            <table>
+                <tr>
+                    <th>Junior Member, Events Vertical – IRIS, Annual Cultural & Management Festival</th>
+                    <th>Aug ’20 – Present</th>
+                </tr>
+
+                <tr>
+                    <td colspan="2">
+                        <div class="details">
+                            <ul>
+                                <li>Collaborated with institute’s administration for welfare, grievances and interests
+                                    of 10+ student communities</li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>Junior Member, Events Vertical – IRIS, Annual Cultural & Management Festival</th>
+                    <th>Aug ’20 – Present</th>
+                </tr>
+
+                <tr>
+                    <td colspan="2">
+                        <div class="details">
+                            <ul>
+                                <li>Collaborated with institute’s administration for welfare, grievances and interests
+                                    of 10+ student communities</li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+
+        <div class="section extra-curricular">
+            <div class="section-title">EXTRA-CURRICULAR ACTIVITIES</div>
+            <ul>
+                <li>
+                    Cleared CFA/FRM Level X conducted by CFA Institute/GARP, USA and secured XX+ marks in X out of X
+                    number of subjects
+                </li>
+                <li>
+                    Cleared CFA/FRM Level X conducted by CFA Institute/GARP, USA and secured XX+ marks in X out of X
+                    number of subjects
+                </li>
+            </ul>
+        </div>
+    </div>
+</body>
+
+</html>

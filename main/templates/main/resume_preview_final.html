@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="{% static 'css/template3.css' %}" />
+  <title>Resume</title>
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+  <style>
+  </style>
+</head>
+
+<body>
+  <div id="loader" class="loader">
+    <div class="loading" data-loading-text="Processing..."></div>
+    <div class="download-again" style="display: none">
+      <p>
+        If download did not start automatically
+        <span onclick="downloadResume()">click</span> here
+      </p>
+      <div class="feedback-main-containeer">
+        <div class="feedback-container">
+            <div class="feedback-post">
+              <h1>THANK YOU!</h1>
+              <img src="{% static 'images/green_tick.png' %}" />
+                <div class="feedback-text">Thanks for rating us!</div>
+            </div>
+            <div class="feedback-star-widget">
+                <h2>Feedback</h2>
+                <p>How can we improve ?</p>
+                <input class="feeback-stars" name="rate" type="radio" id="feedback-rate-5" value="5">
+                <label for="feedback-rate-5" class="fas fa-star"></label>
+                <input class="feeback-stars" name="rate" type="radio" id="feedback-rate-4" value="4">
+                <label for="feedback-rate-4" class="fas fa-star"></label>
+                <input class="feeback-stars" name="rate" type="radio" id="feedback-rate-3" value="3">
+                <label for="feedback-rate-3" class="fas fa-star"></label>
+                <input class="feeback-stars" name="rate" type="radio" id="feedback-rate-2" value="2">
+                <label for="feedback-rate-2" class="fas fa-star"></label>
+                <input class="feeback-stars" name="rate" type="radio" id="feedback-rate-1" value="1">
+                <label for="feedback-rate-1" class="fas fa-star"></label>
+                <formi>
+                    <input type="hidden" name="rating" id="rating">
+                    <div class="feedback-textarea">
+                        <textarea name="feedback-text" cols="30" placeholder="Describe your experience..." required></textarea>
+                    </div>
+                    <input type="email" id="feedback-email" name="feedback-email" placeholder="Feedback Email" required/>
+                    <div class="feedback-btn">
+                        <button id="feedback-submit-btn">
+                              <p class="button-text">Submit</p>
+                              <div class="loading-indicator">
+                                <div class="spinner1"></div>
+                              </div>
+                        </button>
+                    </div>
+                </formi>
+            </div>
+        </div>
+    </div>
+    </div>
+  </div>
+  <div class="page_">
+    <div class="resume-container">
+        <div class="header">
+            <div>
+                <h1>{{resume.first_name}} {{resume.last_name}}</h1>
+                <p>Male/Female, XX years</p>
+
+            </div>
+            <div>
+                <img src="{% static 'images/logo_iim.png'%}" />
+            </div>
+        </div>
+
+        <div class="section education">
+            <div class="section-title">EDUCATIONAL QUALIFICATIONS</div>
+            <table>
+                <!-- <tr>
+                    <th>Degree</th>
+                    <th>Institution</th>
+                    <th>Percentage</th>
+                    <th>Year</th>
+                </tr> -->
+                {% for edu in resume.education %}
+                <tr>
+                    <td>{{edu.degree}}</td>
+                    <td>{{edu.institution}}</td>
+                    <td>{{edu.start_year}}</td>
+                    <td>{{edu.end_year}}</td>
+                </tr>
+                {% endfor %}
+                
+            </table>
+        </div>
+
+        <div class="section achievements">
+            <div class="section-title">ACADEMIC & CO-CURRICULAR ACHIEVEMENTS</div>
+            <ul>
+                {% for exp in resume.awards %}
+                <li>
+                    <div class="achievement-cont">
+                        <div class="achievement-text">{{ exp.award_description }}</div>
+                        <div class="achievement-year">{{exp.award_year}}</div>
+                    </div>
+                </li>
+                {% endfor %}
+                <!-- <li>
+                    <div class="achievement-cont">
+                        <div class="achievement-text">Cleared CFA/FRM Level X conducted by CFA Institute/GARP, USA and
+                            secured XX+ marks in X out of X number of subjects</div>
+                        <div class="achievement-year">2021</div>
+                    </div>
+                </li>
+                <li>
+                    <div class="achievement-cont">
+                        <div class="achievement-text">Cleared CFA/FRM Level X conducted by CFA Institute/GARP, USA and
+                            secured XX+ marks in X out of X number of subjects</div>
+                        <div class="achievement-year">2021</div>
+                    </div>
+                </li> -->
+
+            </ul>
+        </div>
+
+        <div class="section internships">
+            <div class="section-title">INTERNSHIPS</div>
+            <table>
+                {% for exp in resume.experience %}
+                <tr>
+                    <th>{{exp.company}}</th>
+                    <th>{{exp.job_title}}</th>
+                    <th>{{exp.start_year}} – {{ exp.end_year }}</th>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <div class="details">
+                            <ul>
+                                <li>
+                                    {{ exp.description }}
+                                </li>
+                                <!-- <li>
+                                    Examined and analysed simple mechanical structures under 3 different loading
+                                    conditions using HyperMesh and Nastran software
+                                </li> -->
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+                <!-- <tr>
+                    <th>Company Name 1, Location</th>
+                    <th>Project Title/Company Division</th>
+                    <th>April 2018-April 2019</th>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <div class="details">
+                            <ul>
+                                <li>
+                                    Examined and analysed simple mechanical structures under 3 different loading
+                                    conditions using HyperMesh and Nastran software
+                                </li>
+                                <li>
+                                    Examined and analysed simple mechanical structures under 3 different loading
+                                    conditions using HyperMesh and Nastran software
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr> -->
+            </table>
+        </div>
+
+        <div class="section projects">
+            <div class="section-title">PROJECTS & RESEARCH PAPERS</div>
+            <table>
+              {% for exp in resume.projects %}
+                <tr>
+                    <th>{{exp.project_title}}</th>
+                    <th>{{exp.project_year}}</th>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div class="details">
+                            <ul>
+                                <li>{{ exp.project_description }}</li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+                <!-- <tr>
+                    <th>Title of Academic Project 1</th>
+                    <th>Aug ’19</th>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div class="details">
+                            <ul>
+                                <li>Recorded an improvement of 11% + in the final classification score with 70%
+                                    reduction in model training time</li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr> -->
+            </table>
+        </div>
+
+        <div class="section positions">
+            <div class="section-title">POSITIONS OF RESPONSIBILITY</div>
+            <table>
+              {% for exp in resume.responsibilities %}
+                <tr>
+                    <th>{{exp.responsibility_title}}</th>
+                    <th>{{exp.responsibility_year}} </th>
+                </tr>
+
+                <tr>
+                    <td colspan="2">
+                        <div class="details">
+                            <ul>
+                                <li>{{ exp.responsibility_description }}</li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+
+                <!-- <tr>
+                    <th>Junior Member, Events Vertical – IRIS, Annual Cultural & Management Festival</th>
+                    <th>Aug ’20 – Present</th>
+                </tr>
+
+                <tr>
+                    <td colspan="2">
+                        <div class="details">
+                            <ul>
+                                <li>Collaborated with institute’s administration for welfare, grievances and interests
+                                    of 10+ student communities</li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr> -->
+
+            </table>
+        </div>
+
+        <div class="section extra-curricular">
+            <div class="section-title">EXTRA-CURRICULAR ACTIVITIES</div>
+            <ul>
+                <li>
+                    Cleared CFA/FRM Level X conducted by CFA Institute/GARP, USA and secured XX+ marks in X out of X
+                    number of subjects
+                </li>
+                <li>
+                    Cleared CFA/FRM Level X conducted by CFA Institute/GARP, USA and secured XX+ marks in X out of X
+                    number of subjects
+                </li>
+            </ul>
+        </div>
+    </div>
+    <button type="button" class="download-btn" id="rzp-button1">
+      Proceed to Payment
+    </button>
+  </div>
+
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+  <script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
+  <script>
+    function downloadResume() {
+      window.jsPDF = window.jspdf.jsPDF;
+
+      var doc = new jsPDF();
+
+      var page = document.querySelector(".resume-container");
+
+      doc.html(page, {
+        callback: function (doc) {
+          doc.save("resume.docx");
+        },
+        margin: [0, 0],
+        x: 0,
+        y: 0,
+        width: 210,
+        windowWidth: 597,
+        useCORS: true,
+        html2canvas: {
+          useCORS: true,
+        },
+      });
+    }
+  </script>
+  <script>
+    var options = {
+      key: "{{ RAZORPAY_API_KEY }}",
+      amount: "{{amount}}00", // Amount is in paise
+      currency: "INR",
+      name: "Taxom India",
+      description: "Payment Description",
+      image: "https://example.com/your_logo.png",
+      order_id: "{{ order_id }}",
+      handler: function (response) {
+        // alert("Payment Successful.Redirecting to download page.");
+        sendPaymentData(response);
+      },
+      prefill: {
+        name: "Taxom India",
+        email: "cvgenerator@taxomindia.in",
+        contact: "9999999999",
+      },
+      notes: {
+        address: "Razorpay Corporate Office",
+      },
+      theme: {
+        color: "#3399cc",
+      },
+    };
+    var rzp1 = new Razorpay(options);
+    document.getElementById("rzp-button1").onclick = function (e) {
+      rzp1.open();
+      e.preventDefault();
+    };
+  </script>
+  <script>
+    function sendPaymentData(response1) {
+      const loader = document.getElementById("loader");
+      loader.style.display = "flex";
+      const payload = JSON.stringify({
+        response1,
+        resume_id: "{{ resume.id }}",
+      });
+      fetch("/payment_process/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": "{{ csrf_token }}",
+        },
+        body: payload,
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          if (data.status == "true") {
+            downloadResume();
+            var loadingDiv = document.querySelector(".loading");
+            const download_again = document.querySelector(".download-again");
+            const newText = "Downloading...";
+            loadingDiv.setAttribute("data-loading-text", newText);
+            setTimeout(() => {
+              download_again.style.display = "flex";
+              loadingDiv.setAttribute("data-loading-text", "Downloaded");
+            }, 2000);
+
+            console.log("success");
+          } else {
+            console.log("failed");
+            window.location = "/payment_failed";
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  </script>
+
+<script>
+  const stars = document.querySelectorAll('.feedback-star-widget .feeback-stars');
+   const ratingInput = document.getElementById('rating');
+  //  const form = document.getElementById('feedback-form');
+   const post = document.querySelector('.feedback-post');
+   const widget = document.querySelector('.feedback-star-widget');
+   const feedbacksubmit = document.getElementById('feedback-submit-btn')
+   document.getElementById("feedback-rate-5").checked = true;
+   stars.forEach(star => {
+       star.addEventListener('change', () => {
+           ratingInput.value = star.value;
+       });
+   });
+
+   feedbacksubmit.addEventListener('click',function(){
+    const buttonTextElement = document.querySelector(".button-text");
+    const loadingIndicatorElement = document.querySelector(".loading-indicator");
+    const textareaFeedback = document.getElementsByName('feedback-text')[0];
+    const feedbackemail = document.getElementById('feedback-email')
+    buttonTextElement.style.display = "none";
+    loadingIndicatorElement.style.display = "block";
+
+       const formDict = {
+         'rating': ratingInput.value,
+         'rating_text': textareaFeedback.value,
+         'feedback_email': feedbackemail.value,
+         'resume_id': "{{ resume.id }}",
+       };
+
+      const payload = JSON.stringify({
+        formDict,
+      });
+      fetch("/submit_feedback/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": "{{ csrf_token }}",
+        },
+        body: payload,
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.status == "true") {
+            widget.style.display = "none";
+            post.style.display = "block";
+            buttonTextElement.style.display = "inline-block";
+            loadingIndicatorElement.style.display = "none";
+            console.log("success");
+          } else {
+            console.log(data['error']);
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+   })
+</script>
+</body>
+</html>

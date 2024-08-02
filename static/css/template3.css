@@ -1,0 +1,377 @@
+/* General styling */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  line-height: 1.5;
+  font-size: 10px;
+}
+
+.page_ {
+  width: 19cm;
+  min-height: fit-content;
+  padding: 0.5cm;
+  margin: 0.5cm auto;
+  border: 2px #d3d3d3 solid;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.resume-container {
+  margin: auto;
+  padding: 10px;
+}
+
+/* Header section */
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.header p {
+  margin: 0;
+  font-size: 12px;
+}
+
+/* Section titles */
+.section-title {
+  font-size: 11.5px;
+  font-weight: bold;
+  color: black;
+  border-left: 2px solid #444;
+  border-right: 2px solid #444;
+  border-top: 2px solid #444;
+  background-color: #c4c3c3;
+  padding-left: 5px;
+}
+
+/* Sections */
+.section {
+  margin-bottom: 10px;
+}
+
+.section table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 10px;
+  border-spacing: 0px;
+}
+
+.section th,
+.section td {
+  text-align: left;
+  padding: 5px;
+  border: 2px solid #333;
+  /* border-top: 2px solid #333; */
+  /* border-bottom: 2px solid #333; */
+}
+
+.section .details ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.section .details ul li {
+  margin-bottom: 5px;
+}
+
+/* Specific styling for padding between boxes */
+.section:not(:last-child) {
+  margin-bottom: 10px;
+}
+
+.achievements ul,
+.extra-curricular ul {
+  margin: 0;
+  padding-inline-start: 20px;
+  border: 2px solid #333;
+}
+
+.achievement-cont {
+  display: flex;
+}
+
+.achievement-text {
+  flex: 14;
+}
+
+.achievement-year {
+  flex: 1;
+  padding: 0 5px;
+}
+
+
+.loading {
+  left: 50%;
+  top: 33%;
+  font-size: 36px;
+  font-family: serif;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 800;
+  letter-spacing: 4.4px;
+  text-transform: capitalize;
+  position: absolute;
+  overflow: hidden;
+  scrollbar-width: 0;
+  transform: translate(-50%, -60%);
+}
+
+.loading:before {
+  color: #aaa;
+  content: attr(data-loading-text);
+}
+
+.loading:after {
+  top: 0;
+  left: 0;
+  width: 0;
+  opacity: 1;
+  color: #444;
+  overflow: hidden;
+  position: absolute;
+  content: attr(data-loading-text);
+  animation: loading 4s infinite;
+}
+
+@keyframes loading {
+  0% {
+    width: 0;
+  }
+
+  100% {
+    width: 100%;
+  }
+}
+
+.loader {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.download-again {
+  place-content: center;
+  display: none;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
+  justify-content: flex-end;
+  font-size: 20px;
+}
+
+.download-again span {
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.feedback-main-containeer {
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+  display: grid;
+  height: 465px;
+  width: fit-content;
+  place-items: center;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.feedback-container {
+  position: relative;
+  height: fit-content;
+  width: 400px;
+  background: #fff;
+  padding: 14px 30px;
+  box-shadow: 25px 30px 55px #5557;
+  border-radius: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.feedback-container .feedback-post {
+  display: none;
+}
+
+.feedback-post img {
+  width: 100px;
+}
+
+.feedback-container .feedback-text {
+  font-size: 25px;
+  color: #666;
+  font-weight: 500;
+}
+
+.feedback-container .feedback-edit {
+  position: absolute;
+  right: 10px;
+  top: 5px;
+  font-size: 16px;
+  color: #666;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.feedback-container .feedback-edit:hover {
+  text-decoration: underline;
+}
+
+.feedback-container .feedback-star-widget input {
+  display: none;
+}
+
+.feedback-star-widget label {
+  font-size: 40px;
+  color: #444;
+  padding: 10px;
+  float: right;
+  transition: all 0.2s ease;
+}
+
+input:not(:checked)~label:hover,
+input:not(:checked)~label:hover~label {
+  color: #fd4;
+}
+
+input:checked~label {
+  color: #fd4;
+}
+
+input#feedback-rate-5:checked~label {
+  color: #fe7;
+  text-shadow: 0 0 20px #952;
+}
+
+input:checked~form {
+  display: block;
+}
+
+formi header {
+  width: 100%;
+  font-size: 20px;
+  color: #333;
+  font-weight: 500;
+  margin: 20px 0 10px 0;
+  text-align: center;
+  transition: all 0.2 ease;
+}
+
+formi .feedback-textarea {
+  height: 100px;
+  width: 100%;
+  overflow: hidden;
+}
+
+formi .feedback-textarea textarea,
+#feedback-email {
+  height: 100%;
+  width: 100%;
+  outline: none;
+  color: #333;
+  padding-top: 10px;
+  border: none;
+  outline: none;
+  background: #f3f3f3;
+  padding: 12px 15px;
+  font-size: 17px;
+  resize: none;
+}
+
+formi .feedback-btn {
+  height: 45px;
+  width: 100%;
+  margin: 15px 0;
+}
+
+formi .feedback-btn button {
+  height: 100%;
+  width: 100%;
+  outline: none;
+  border-radius: 20px;
+  font-size: 17px;
+  font-weight: 500;
+  text-transform: uppercase;
+  transform: all 0.3s ease;
+  background-color: #4aca4a;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-indicator {
+  display: none;
+  width: 10px;
+  height: 10px;
+  border: 4px solid white;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+form .feedback-btn button:hover {
+  background-color: #f73636;
+}
+
+#feedback-email {
+  margin-top: 20px;
+  display: block;
+}
+
+@media screen and (max-width: 500px) {
+  .a4-3 {
+    flex-wrap: wrap;
+    box-sizing: border-box;
+  }
+
+  .download-again {
+    justify-content: center;
+  }
+}
+.download-btn {
+  width: fit-content;
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #b73a3a;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.download-btn:hover {
+  background-color: #a13232;
+}
+
+.header img{
+  width:51px; 
+}

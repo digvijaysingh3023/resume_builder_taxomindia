@@ -148,7 +148,7 @@ def resume_preview(request, resume_id):
             'resume' : resume_details,
             'RAZORPAY_API_KEY':os.getenv('RAZORPAY_API_KEY')
         }
-        return render(request, 'main/template2.html', context)
+        return render(request, 'main/resume_preview_final.html', context)
     
     return HttpResponse('Something went wrong.Try Again Later')
 
